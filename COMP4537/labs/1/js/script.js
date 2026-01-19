@@ -9,6 +9,15 @@
  * (For example, it initially ignored the 2 second updateStorage interval).
  */
 
+/**
+ * Question answers:
+ * 
+ * Q1: Yes. localStorage is shared within the browser itself which is why 
+ * Reader can show the results of Writer and update the changes. 
+ * 
+ * Q2: No. localStorage is unique for each browser.
+ */
+
 // Check for index page
 const isIndexPage = window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/');
 
@@ -33,9 +42,11 @@ document.getElementById('timeLabel').innerText = timeLabel;
 document.title = isReadOnly ? messages.readerTitle : messages.writerTitle;
 
 const backBtn = document.getElementById('btnBack');
-backBtn.innerText = messages.backButton;
-backBtn.onclick = function() {
-    window.location.href = 'index.html';
+if (backBtn) {
+    backBtn.innerText = messages.backButton;
+    backBtn.onclick = function() {
+        window.location.href = 'index.html';
+    }
 }
 
 // Creates a new note, along with saving the updated localStorage values
@@ -95,13 +106,32 @@ class Note {
 
 // Generate each note stored within the noteData
 if (!isIndexPage) {
-    notes.forEach(noteData => {
+    displayNotes();
+
+    setInterval(() => {
+        if (isReadOnly) {
+            // Reader: Fetch new data from other tabs
+            displayNotes(); 
+        } else {
+            // Writer: Save current typing progress
+            updateStorage(); 
+        }
+    }, 2000);
+}
+
+function displayNotes() {
+    // Clear the current list so we don't just keep adding to the bottom
+    notesWrapper.innerHTML = ''; 
+    
+    const latestNotes = JSON.parse(localStorage.getItem('notes')) || [];
+    
+    latestNotes.forEach(noteData => {
         const note = new Note(noteData.content, noteData.id, isReadOnly);
         notesWrapper.appendChild(note.createDOMElement());
     });
-
-    // Update the storage every 2000 ms (2s)
-    setInterval(updateStorage, 2000);
+    
+    // Update the "Updated at" time
+    timeDisplay.innerText = new Date().toLocaleTimeString();
 }
 
 // Reused to keep note data updated after any changes
