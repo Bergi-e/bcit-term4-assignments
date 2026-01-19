@@ -3,12 +3,14 @@ const notesWrapper = document.getElementById('notes');
 const addBtn = document.getElementById('btnAdd');
 
 // Creates a new note, along with saving the updated localStorage values
-addBtn.addEventListener('click', () => {
-    const newNote = new Note('');
-    notes.push(newNote);
-    localStorage.setItem('notes', JSON.stringify(notes));
-    notesWrapper.appendChild(newNote.createDOMElement());
-});
+if (addBtn) {
+    addBtn.addEventListener('click', () => {
+        const newNote = new Note('');
+        notes.push(newNote);
+        localStorage.setItem('notes', JSON.stringify(notes));
+        notesWrapper.appendChild(newNote.createDOMElement());
+    });
+}
 
 
 class Note {
