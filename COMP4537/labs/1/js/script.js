@@ -18,8 +18,9 @@
  * Q2: No. localStorage is unique for each browser.
  */
 
-// Check for index page
+// Check page state
 const isIndexPage = window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/');
+const isReadOnly = !window.location.pathname.includes('writer.html');
 
 if (isIndexPage) {
     document.title = messages.indexTitle;
@@ -28,12 +29,11 @@ if (isIndexPage) {
     document.getElementById('linkReader').innerText = messages.readerLink;
 }
 
-// For read/write pages
+// Handle elements within reader & writer
 const notes = (JSON.parse(localStorage.getItem('notes'))) || [];
 const notesWrapper = document.getElementById('notes');
 const addBtn = document.getElementById('btnAdd');
 const timeDisplay = document.getElementById('timeDisplay')
-const isReadOnly = !window.location.pathname.includes('writer.html');
 
 // Concatenates "updated at" or "stored at" dynamically
 const timeLabel = isReadOnly ? messages.lastUpdated : messages.lastSaved;
@@ -47,17 +47,6 @@ if (backBtn) {
     backBtn.onclick = function() {
         window.location.href = 'index.html';
     }
-}
-
-// Creates a new note, along with saving the updated localStorage values
-if (addBtn) {
-    addBtn.addEventListener('click', () => {
-        const newNote = new Note('');
-        notes.push(newNote);
-        updateStorage();
-        notesWrapper.appendChild(newNote.createDOMElement());
-    });
-    addBtn.innerText = messages.addButton;
 }
 
 class Note {
@@ -138,4 +127,15 @@ function displayNotes() {
 function updateStorage() {
     localStorage.setItem('notes', JSON.stringify(notes));
     timeDisplay.innerText = new Date().toLocaleTimeString();
+}
+
+// Creates a new note, along with saving the updated localStorage values
+if (addBtn) {
+    addBtn.addEventListener('click', () => {
+        const newNote = new Note('');
+        notes.push(newNote);
+        updateStorage();
+        notesWrapper.appendChild(newNote.createDOMElement());
+    });
+    addBtn.innerText = messages.addButton;
 }
