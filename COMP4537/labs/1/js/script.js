@@ -1,6 +1,7 @@
 const notes = (JSON.parse(localStorage.getItem('notes'))) || [];
 const notesWrapper = document.getElementById('notes');
 const addBtn = document.getElementById('btnAdd');
+const isReadOnly = !window.location.pathname.includes('writer.html');
 
 // Creates a new note, along with saving the updated localStorage values
 if (addBtn) {
@@ -58,7 +59,7 @@ class Note {
 }
 
 notes.forEach(noteData => {
-    const note = new Note(noteData.content, noteData.id, !addBtn);
+    const note = new Note(noteData.content, noteData.id, isReadOnly);
     notesWrapper.appendChild(note.createDOMElement());
 });
 
