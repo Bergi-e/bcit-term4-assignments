@@ -7,9 +7,14 @@ const isReadOnly = !window.location.pathname.includes('writer.html');
 // Concatenates "updated at" or "stored at" dynamically
 const timeLabel = isReadOnly ? messages.lastUpdated : messages.lastSaved;
 document.getElementById('timeLabel').innerText = timeLabel;
-
 // Sets the browser tab title dynamically
 document.title = isReadOnly ? messages.readerTitle : messages.writerTitle;
+
+const backBtn = document.getElementById('btnBack');
+backBtn.innerText = messages.backButton;
+backBtn.onclick = function() {
+    window.location.href = 'index.html';
+}
 
 // Creates a new note, along with saving the updated localStorage values
 if (addBtn) {
@@ -78,4 +83,5 @@ function updateStorage() {
     timeDisplay.innerText = new Date().toLocaleTimeString();
 }
 
+// Update the storage every 2000 ms (2s)
 setInterval(updateStorage, 2000);

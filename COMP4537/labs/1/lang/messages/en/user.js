@@ -1,7 +1,7 @@
 const messages = {
     writerTitle: "Writer",
     readerTitle: "Reader",
-    backButton: "Back",
+    backButton: "back",
     lastSaved: "stored at: ",
     lastUpdated: "updated at: ",
     addButton: "add",
