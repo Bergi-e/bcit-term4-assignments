@@ -5,5 +5,8 @@ const messages = {
     lastSaved: "stored at: ",
     lastUpdated: "updated at: ",
     addButton: "add",
-    removeButton: "remove"
+    removeButton: "remove",
+    indexTitle: "Notes Index",
+    writerLink: "Writer",
+    readerLink: "Reader"
 };

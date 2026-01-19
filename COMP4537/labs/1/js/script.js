@@ -1,3 +1,25 @@
+/**  AI NOTE:
+ * Gemini was used in the process of creating this code. 
+ * I made sure to Guided Learning feature to go line-by-line
+ * and fully understand every part of what I was making. 
+ * 
+ * The AI would ask questions on what I would/should do, and assisted
+ * me in reaching the correct endpoint. I made sure the final result was on par
+ * with what the assignment required
+ * (For example, it initially ignored the 2 second updateStorage interval).
+ */
+
+// Check for index page
+const isIndexPage = window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/');
+
+if (isIndexPage) {
+    document.title = messages.indexTitle;
+    document.getElementById('mainHeading').innerText = messages.indexTitle;
+    document.getElementById('linkWriter').innerText = messages.writerLink;
+    document.getElementById('linkReader').innerText = messages.readerLink;
+}
+
+// For read/write pages
 const notes = (JSON.parse(localStorage.getItem('notes'))) || [];
 const notesWrapper = document.getElementById('notes');
 const addBtn = document.getElementById('btnAdd');
@@ -72,16 +94,18 @@ class Note {
 }
 
 // Generate each note stored within the noteData
-notes.forEach(noteData => {
-    const note = new Note(noteData.content, noteData.id, isReadOnly);
-    notesWrapper.appendChild(note.createDOMElement());
-});
+if (!isIndexPage) {
+    notes.forEach(noteData => {
+        const note = new Note(noteData.content, noteData.id, isReadOnly);
+        notesWrapper.appendChild(note.createDOMElement());
+    });
+
+    // Update the storage every 2000 ms (2s)
+    setInterval(updateStorage, 2000);
+}
 
 // Reused to keep note data updated after any changes
 function updateStorage() {
     localStorage.setItem('notes', JSON.stringify(notes));
     timeDisplay.innerText = new Date().toLocaleTimeString();
 }
-
-// Update the storage every 2000 ms (2s)
-setInterval(updateStorage, 2000);
