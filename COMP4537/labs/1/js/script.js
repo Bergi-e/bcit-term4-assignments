@@ -1,6 +1,7 @@
 const notes = (JSON.parse(localStorage.getItem('notes'))) || [];
 const notesWrapper = document.getElementById('notes');
 const addBtn = document.getElementById('btnAdd');
+const timeDisplay = document.getElementById('timeDisplay')
 const isReadOnly = !window.location.pathname.includes('writer.html');
 
 // Creates a new note, along with saving the updated localStorage values
@@ -12,7 +13,6 @@ if (addBtn) {
         notesWrapper.appendChild(newNote.createDOMElement());
     });
 }
-
 
 class Note {
     constructor(content, id, isReadOnly) {
@@ -58,11 +58,16 @@ class Note {
     }
 }
 
+// Generate each note stored within the noteData
 notes.forEach(noteData => {
     const note = new Note(noteData.content, noteData.id, isReadOnly);
     notesWrapper.appendChild(note.createDOMElement());
 });
 
+// Reused to keep note data updated after any changes
 function updateStorage() {
     localStorage.setItem('notes', JSON.stringify(notes));
+    timeDisplay.innerText = new Date().toLocaleTimeString();
 }
+
+setInterval(updateStorage, 2000);
