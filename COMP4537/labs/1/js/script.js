@@ -24,20 +24,24 @@ class Note {
         this.container = document.createElement('div');
 
         const elem = document.createElement('textarea');
-        const removeBtn = document.createElement('button');
-
         elem.value = this.content;
-
         elem.addEventListener('input', () => {
             this.content = elem.value;
             localStorage.setItem('notes', JSON.stringify(notes));
         });
-
-        removeBtn.textContent = messages.removeButton;
-        removeBtn.addEventListener('click', () => this.remove());
-
-        this.container.appendChild(removeBtn);
         this.container.appendChild(elem);
+
+        // addBtn is essentially a read/write page clause
+        if (addBtn) {
+
+            // Display the remove button ONLY in writer.html
+            const removeBtn = document.createElement('button');
+            removeBtn.textContent = messages.removeButton;
+            removeBtn.addEventListener('click', () => this.remove());
+            this.container.appendChild(removeBtn);
+        } else {
+            elem.readOnly = true;
+        }
         return this.container;
     }
     
