@@ -25,6 +25,12 @@ class Note {
         const removeBtn = document.createElement('button');
 
         elem.value = this.content;
+
+        elem.addEventListener('input', () => {
+            this.content = elem.value;
+            localStorage.setItem('notes', JSON.stringify(notes));
+        });
+
         removeBtn.textContent = messages.removeButton;
         removeBtn.addEventListener('click', () => this.remove());
 
