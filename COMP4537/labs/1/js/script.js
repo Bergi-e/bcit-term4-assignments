@@ -12,9 +12,9 @@ addBtn.addEventListener('click', () => {
 
 
 class Note {
-    constructor(content) {
+    constructor(content, id) {
         this.content = content;
-        this.id = Date.now(); // Creates a unique ID based on timestamp
+        this.id = id || Date.now(); // Creates a unique ID based on timestamp
     }
 
     // Method to create the HTML for this note (textarea + remove button)
@@ -44,3 +44,9 @@ class Note {
         
     }
 }
+
+notes.forEach(noteData => {
+    const note = new Note(noteData.content, noteData.id);
+    notesWrapper.appendChild(note.createDOMElement());
+
+});
