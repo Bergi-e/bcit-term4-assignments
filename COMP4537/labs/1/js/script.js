@@ -1,5 +1,15 @@
 const notes = (JSON.parse(localStorage.getItem('notes'))) || [];
 const notesWrapper = document.getElementById('notes');
+const addBtn = document.getElementById('btnAdd');
+
+// Creates a new note, along with saving the updated localStorage values
+addBtn.addEventListener('click', () => {
+    const newNote = new Note('');
+    notes.push(newNote);
+    localStorage.setItem('notes', JSON.stringify(notes));
+    notesWrapper.appendChild(newNote.createDOMElement());
+});
+
 
 class Note {
     constructor(content) {
@@ -12,13 +22,13 @@ class Note {
         this.container = document.createElement('div');
 
         const elem = document.createElement('textarea');
-        const removeButton = document.createElement('button');
+        const removeBtn = document.createElement('button');
 
         elem.value = this.content;
-        removeButton.textContent = messages.removeButton;
-        removeButton.addEventListener('click', () => this.remove());
+        removeBtn.textContent = messages.removeButton;
+        removeBtn.addEventListener('click', () => this.remove());
 
-        this.container.appendChild(removeButton);
+        this.container.appendChild(removeBtn);
         this.container.appendChild(elem);
         return this.container;
     }
