@@ -4,6 +4,13 @@ const addBtn = document.getElementById('btnAdd');
 const timeDisplay = document.getElementById('timeDisplay')
 const isReadOnly = !window.location.pathname.includes('writer.html');
 
+// Concatenates "updated at" or "stored at" dynamically
+const timeLabel = isReadOnly ? messages.lastUpdated : messages.lastSaved;
+document.getElementById('timeLabel').innerText = timeLabel;
+
+// Sets the browser tab title dynamically
+document.title = isReadOnly ? messages.readerTitle : messages.writerTitle;
+
 // Creates a new note, along with saving the updated localStorage values
 if (addBtn) {
     addBtn.addEventListener('click', () => {
@@ -12,6 +19,7 @@ if (addBtn) {
         updateStorage();
         notesWrapper.appendChild(newNote.createDOMElement());
     });
+    addBtn.innerText = messages.addButton;
 }
 
 class Note {
