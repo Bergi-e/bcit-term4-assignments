@@ -44,7 +44,7 @@ const backBtn = document.getElementById('btnBack');
 if (backBtn) {
     backBtn.innerText = messages.backButton;
     backBtn.onclick = function() {
-        window.location.href = 'index.html'; // Points to index.html for reliable hosting
+        window.location.href = 'index'; // Points to index for reliable hosting
     }
 }
 
