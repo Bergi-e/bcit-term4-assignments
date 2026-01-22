@@ -1,3 +1,4 @@
+// Using a separate js file to prevent hard-coded strings for modularity
 const messages = {
     writerTitle: "Writer",
     readerTitle: "Reader",

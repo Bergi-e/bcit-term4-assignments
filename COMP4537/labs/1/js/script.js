@@ -48,6 +48,7 @@ if (backBtn) {
     }
 }
 
+// Using class to encapsulate the data along with the behaviours into one blueprint
 class Note {
     constructor(content, id, isReadOnly) {
         this.content = content;
@@ -96,6 +97,7 @@ class Note {
 if (!isIndexPage) {
     const rawData = JSON.parse(localStorage.getItem('notes')) || [];
     
+    // Updating every 2 seconds isn't completely necessary outside of this assignment (it's redundant and inefficient)
     if (isReadOnly) {
         // Reader: Fetch new data from other tabs every 2 seconds
         displayNotes(); 
