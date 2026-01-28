@@ -114,6 +114,7 @@ if (!isIndexPage) {
     }
 }
 
+// Change to a class next time
 function displayNotes() {
     // Clear the current list so we don't just keep adding to the bottom
     if (!notesWrapper) return;
@@ -131,6 +132,7 @@ function displayNotes() {
 }
 
 // Reused to keep note data updated after any changes
+// Change to a class next time
 function updateStorage() {
     localStorage.setItem('notes', JSON.stringify(notes));
     updateTime();
@@ -147,6 +149,7 @@ if (addBtn) {
     });
 }
 
+// Change to a class next time
 function updateTime() {
     if (timeDisplay) {
         timeDisplay.innerText = new Date().toLocaleTimeString();
