@@ -1,3 +1,4 @@
+// Gather the date server-side
 class Utils {
     static getDate() {
         const date = new Date();

@@ -1,3 +1,4 @@
+// Displays the message itself, gathering the date/time from utils.js
 class Lang {
     constructor() {
         this.greeting = 
