@@ -34,6 +34,12 @@ class Server {
                 this.handleReadFile(req, res, filename);
             }
 
+            // Default path to ensure server is healthy (and take away any 404) 
+            else if (path === '/' && req.method === 'GET') {
+                res.writeHead(200, {'Content-Type': 'text/plain'});
+                res.end("Server is running as intended!");
+            }
+
             else {
                 // 404 for any other path
                 res.writeHead(404, {'Content-Type': 'text/plain'});
@@ -67,6 +73,14 @@ class Server {
 
     // Handler for WRITING (or appending) to the file 
     handleWriteFile(req, res, query) {
+
+        // Check if "text" parameter exists
+        if (!query.text) {
+            res.writeHead(400, {'Content-Type': 'text/plain'});
+            res.end("400 Bad Request: Missing 'text' parameter (e.g., ?text=Hello)");
+            return; // Won't write to the file
+        }
+
         const text = query.text || "";
         
         // appendFile() automatically creates the file if it doesn't exist.
